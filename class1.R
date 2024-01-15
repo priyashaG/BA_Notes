@@ -39,3 +39,41 @@ smoking_data <- mutate(smoking_data,
 filter(smoking_data, gender =="Male")
 filter(smoking_data, age == 35 & smoke == "No")
 filter(smoking_data, marital_status != "Divorced" & nationality != "English")
+#doityourself4
+library(dplyr)
+library(tidyverse)
+library(openintro)
+smoking_data|>
+  select(highest_qualification,amt_weekdays)|>
+  rename(hq=highest_qualification,smoke_weekdays=amt_weekdays)|>
+  group_by(hq)|>
+  summarise(total_cigarettes= sum(smoke_weekdays, na.rm=T))
+smoking_data|>
+  filter(age<30)|>
+  arrange(-age)
+smoking_data|>
+  select(gross_income, amt_weekends)|>
+  group_by(gross_income)|>
+  summarise(total_cig= sum(amt_weekends, na.rm=T))
+smoking_data|>
+  group_by(gender)|>
+  summarise(average=mean(age))
+#doityourself5
+smoking_data|>
+  mutate(
+    age_category = case_when(
+      age>=15 &
+        age<= 25 ~ "group1",
+      age>= 26 &
+        age<= 40 ~ "group2",
+      age>= 41 &
+        age< 59 ~ "group3",
+      age>= 59 ~ "group4")
+  )
+smoking_data|>
+  mutate(
+    gender_name = case_when(
+      gender = Female ~ "1",
+      gender = Male ~ "0"
+    )
+  )
